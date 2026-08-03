@@ -124,7 +124,7 @@ async function loadRecords() {
         manifest,
         manifestPath,
         versionDir,
-        sourcePath: path.join(versionDir, manifest.source ?? "email.tsx"),
+        sourcePath: path.join(versionDir, manifest.source ?? "email.jsx"),
         artifactPath: path.join(versionDir, manifest.output ?? "artifacts/email.html"),
         email,
         emailManifestPath,
@@ -197,7 +197,7 @@ async function buildInputSha256(record) {
     emailsRoot,
     "_shared",
     "layouts",
-    `${manifest.layoutRevision}.tsx`,
+    `${manifest.layoutRevision}.jsx`,
   );
   const [brandUniversity, brandVersion] = String(manifest.brandRevision).split("/");
   const brandPath = path.join(universitiesRoot, brandUniversity, "brand", brandVersion);
@@ -354,7 +354,7 @@ async function validateRecord(
     emailsRoot,
     "_shared",
     "layouts",
-    `${manifest.layoutRevision ?? ""}.tsx`,
+    `${manifest.layoutRevision ?? ""}.jsx`,
   );
   if (!(await exists(layoutPath))) {
     errors.push(`No existe el layout ${manifest.layoutRevision}.`);
@@ -366,7 +366,7 @@ async function validateRecord(
     brandUniversity ?? "",
     "brand",
     brandVersion ?? "",
-    "theme.ts",
+    "theme.js",
   );
   if (!(await exists(brandPath))) {
     errors.push(`No existe la marca ${manifest.brandRevision}.`);
@@ -464,6 +464,24 @@ async function commandList() {
 async function commandCatalog() {
   const entries = await writeCatalog();
   console.log(`Catálogo actualizado: ${relative(catalogPath)} (${entries.length} versiones).`);
+}
+
+async function commandCompile() {
+  const temporaryRoot = await mkdtemp(path.join(tmpdir(), "react-email-compile-"));
+  const temporaryOutput = path.join(temporaryRoot, "out");
+  try {
+    runEmail([
+      "export",
+      "--dir",
+      relative(emailsRoot),
+      "--outDir",
+      temporaryOutput,
+      "--silent",
+    ]);
+    console.log("Compilación de plantillas completada correctamente.");
+  } finally {
+    await rm(temporaryRoot, { recursive: true, force: true });
+  }
 }
 
 async function commandCheck(spec, all) {
@@ -743,7 +761,7 @@ async function commandNewFromTemplate(options) {
   );
   const versionDirectory = path.join(emailDirectory, "versions", "v001");
   const template = String(options.template ?? "promotional/v001");
-  const starterPath = path.join(startersRoot, template, "email.tsx.template");
+  const starterPath = path.join(startersRoot, template, "email.jsx.template");
   if (!(await exists(starterPath))) throw new Error(`No existe el starter ${template}.`);
 
   const subject = String(options.subject ?? emailName);
@@ -755,7 +773,7 @@ async function commandNewFromTemplate(options) {
     .replaceAll("@PREHEADER_JSON@", JSON.stringify(preheader));
 
   await mkdir(versionDirectory, { recursive: true });
-  await writeFile(path.join(versionDirectory, "email.tsx"), starter, "utf8");
+  await writeFile(path.join(versionDirectory, "email.jsx"), starter, "utf8");
   await writeJson(path.join(emailDirectory, "email.json"), {
     schemaVersion: 1,
     emailId,
@@ -781,7 +799,7 @@ async function commandNewFromTemplate(options) {
     createdAt: isoDate(),
     generatedAt: null,
     releasedAt: null,
-    source: "email.tsx",
+    source: "email.jsx",
     output: "artifacts/email.html",
     outputSha256: null,
     inputSha256: null,
@@ -833,6 +851,7 @@ Gestión de correos versionados
   npm run dev -- ulat-eml-2026-001-01@v001
   npm run export -- ulat-eml-2026-001-01@v001
   npm run email:check -- --all
+  npm run check:compile
   npm run email:diff -- <id>@v001 <id>@v002
   npm run email:release -- <id>@v001
 `);
@@ -848,6 +867,9 @@ async function main() {
       break;
     case "catalog":
       await commandCatalog();
+      break;
+    case "compile":
+      await commandCompile();
       break;
     case "check":
       await commandCheck(positionals[0], Boolean(options.all));

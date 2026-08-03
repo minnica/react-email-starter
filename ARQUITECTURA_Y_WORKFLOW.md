@@ -6,6 +6,9 @@ Este repositorio está preparado para producir cientos o miles de correos para d
 universidades sin perder la capacidad de localizar, reconstruir y modificar una entrega
 histórica concreta.
 
+El código de las plantillas, componentes, layouts y temas se escribe exclusivamente en JavaScript
+y JSX. `jsconfig.json` conserva los aliases de imports sin introducir TypeScript en el proyecto.
+
 La unidad de trabajo no es un archivo suelto llamado `NewEmail`, sino una versión identificada:
 
 ```text
@@ -34,12 +37,12 @@ componentes compartidos sin revisión.
   antigua.
 - No existían campañas, mensajes, versiones, manifiestos ni IDs únicos.
 - React Email exportaba también `CtaButton.preview.jsx` y `CtaSection.preview.jsx`, porque cualquier
-  `.js`, `.jsx` o `.tsx` con `export default` dentro de una carpeta visible se considera una
+  `.js` o `.jsx` con `export default` dentro de una carpeta visible se considera una
   plantilla.
 - `package-lock.json` estaba ignorado, por lo que una instalación futura no tenía garantizadas las
   mismas dependencias.
-- El `tsconfig` solo incluía `.ts` y `.tsx`, mientras que el código propio estaba en `.jsx`.
-- No había compilador TypeScript, validación, búsqueda, exportación individual ni comparación.
+- La configuración anterior no validaba realmente los archivos `.jsx` del proyecto.
+- No había comprobación de sintaxis/compilación, búsqueda, exportación individual ni comparación.
 - El HTML final no se conservaba en el repositorio.
 - Git solo contenía el estado general del proyecto, no hitos identificables por entrega.
 
@@ -57,12 +60,12 @@ y temas dentro de cada correo, porque produciría duplicación excesiva.
 Una versión normal necesita únicamente:
 
 ```text
-email.tsx                 # fuente editable
+email.jsx                 # fuente editable
 version.json              # identidad y trazabilidad
 artifacts/email.html      # resultado generado
 ```
 
-`content.ts`, estilos locales y recursos se crean solo cuando aportan claridad. No son obligatorios.
+`content.js`, estilos locales y recursos se crean solo cuando aportan claridad. No son obligatorios.
 
 ## 4. Árbol actual
 
@@ -73,28 +76,26 @@ artifacts/email.html      # resultado generado
 │   │   ├── kits/
 │   │   │   └── v001/
 │   │   │       ├── components/
-│   │   │       │   ├── CtaButton.tsx
-│   │   │       │   └── CtaSection.tsx
-│   │   │       └── index.ts
+│   │   │       │   ├── CtaButton.jsx
+│   │   │       │   └── CtaSection.jsx
+│   │   │       └── index.js
 │   │   ├── layouts/
 │   │   │   ├── legacy/
-│   │   │   │   └── v001.tsx
+│   │   │   │   └── v001.jsx
 │   │   │   └── promotional/
-│   │   │       └── v001.tsx
+│   │   │       └── v001.jsx
 │   │   ├── starters/
 │   │   │   └── promotional/
 │   │   │       └── v001/
-│   │   │           └── email.tsx.template
-│   │   └── types/
-│   │       └── email.ts
+│   │   │           └── email.jsx.template
 │   ├── _universities/
 │   │   └── ulatina/
 │   │       ├── university.json
 │   │       └── brand/
 │   │           └── v001/
-│   │               └── theme.ts
+│   │               └── theme.js
 │   ├── _previews/
-│   │   └── cta-section.tsx
+│   │   └── cta-section.jsx
 │   └── deliveries/
 │       └── ulatina/
 │           └── 2026/
@@ -105,7 +106,7 @@ artifacts/email.html      # resultado generado
 │                           ├── email.json
 │                           └── versions/
 │                               └── v001/
-│                                   ├── email.tsx
+│                                   ├── email.jsx
 │                                   ├── version.json
 │                                   └── artifacts/
 │                                       └── email.html
@@ -150,7 +151,7 @@ reestructuración. Los correos nuevos parten de `promotional/v001`.
 
 ### `emails/_shared/starters`
 
-Son puntos de partida para `npm run email:new`. Un starter crea un `email.tsx` independiente; el
+Son puntos de partida para `npm run email:new`. Un starter crea un `email.jsx` independiente; el
 correo resultante no importa el archivo starter y puede modificarse libremente.
 
 ### `emails/_universities`
@@ -202,7 +203,7 @@ Registra:
 
 ### `artifacts/email.html`
 
-Es el archivo entregable exacto. No se edita manualmente. La fuente de cambios es `email.tsx` y el
+Es el archivo entregable exacto. No se edita manualmente. La fuente de cambios es `email.jsx` y el
 HTML se vuelve a generar.
 
 ### `catalog/email-index.generated.json`
@@ -240,7 +241,7 @@ Una versión es editable mientras tiene `status: draft`.
 
 En el momento en que se envía como entrega final se ejecuta `email:release`. Desde ese momento:
 
-- No se modifica `email.tsx`.
+- No se modifica `email.jsx`.
 - No se modifica `version.json`.
 - No se reemplaza `artifacts/email.html`.
 - No se modifica ninguna revisión compartida que cambie su render.
@@ -275,7 +276,7 @@ npm run export -- <email-id>@<versión>
 npm run export:all
 npm run email:diff -- <versión-a> <versión-b>
 npm run email:release -- <email-id>@<versión>
-npm run typecheck
+npm run check
 npm run check
 ```
 
@@ -310,7 +311,7 @@ npm run email:new -- \
   --preheader "Conoce las fechas y requisitos."
 ```
 
-El script asigna IDs, crea campaña, mensaje, `v001`, `email.tsx`, manifiestos y actualiza el
+El script asigna IDs, crea campaña, mensaje, `v001`, `email.jsx`, manifiestos y actualiza el
 catálogo. Después se sustituye el contenido provisional del starter.
 
 ### Caso B: correo nuevo dentro de una campaña existente
@@ -337,7 +338,7 @@ npm run email:new -- \
   --email-name "Invitación"
 ```
 
-Después se reemplaza la estructura de `email.tsx`. Puede seguir usando componentes del kit o usar
+Después se reemplaza la estructura de `email.jsx`. Puede seguir usando componentes del kit o usar
 directamente componentes de React Email. No es obligatorio convertir una estructura única en un
 layout compartido.
 
@@ -382,7 +383,7 @@ línea real de procedencia.
 
 1. Determinar si la versión base es `draft` o `delivered`.
 2. Crear una versión si ya fue entregada.
-3. Modificar `email.tsx` o `content.ts` si existe.
+3. Modificar `email.jsx` o `content.js` si existe.
 4. Buscar que no queden las cifras anteriores.
 5. Previsualizar y exportar.
 6. Comparar fuentes y HTML.
@@ -406,23 +407,23 @@ El manifiesto y checksum permiten demostrar exactamente qué enlace contenía el
 
 ### Caso I: modificar, eliminar o incorporar carreras
 
-Para listas breves, conservar los datos dentro de `email.tsx`. Para listas extensas o repetidas,
-crear `content.ts` dentro de la misma versión:
+Para listas breves, conservar los datos dentro de `email.jsx`. Para listas extensas o repetidas,
+crear `content.js` dentro de la misma versión:
 
 ```text
 v004/
-├── content.ts
-├── email.tsx
+├── content.js
+├── email.jsx
 ├── version.json
 └── artifacts/email.html
 ```
 
-`content.ts` pertenece a esa versión; no se crea un archivo global `uLatinaData` porque volvería a
+`content.js` pertenece a esa versión; no se crea un archivo global `uLatinaData` porque volvería a
 acoplar campañas sin relación.
 
 ### Caso J: ajuste visual exclusivo de un correo
 
-El estilo se implementa localmente en `email.tsx`, o en un componente dentro de la misma carpeta si
+El estilo se implementa localmente en `email.jsx`, o en un componente dentro de la misma carpeta si
 la fuente crece demasiado. No se cambia el tema de la universidad para resolver una excepción.
 
 ### Caso K: cambio visual reusable en varios correos
@@ -436,8 +437,8 @@ la fuente crece demasiado. No se cambia el tema de la universidad para resolver 
 Ejemplo:
 
 ```text
-emails/_shared/layouts/promotional/v001.tsx
-emails/_shared/layouts/promotional/v002.tsx
+emails/_shared/layouts/promotional/v001.jsx
+emails/_shared/layouts/promotional/v002.jsx
 ```
 
 ### Caso L: cambio general de marca de una universidad
@@ -445,7 +446,7 @@ emails/_shared/layouts/promotional/v002.tsx
 No se modifica `brand/v001`. Se crea:
 
 ```text
-emails/_universities/ulatina/brand/v002/theme.ts
+emails/_universities/ulatina/brand/v002/theme.js
 ```
 
 Después se actualiza `defaultBrandRevision`, `brandImport` y `brandExport` en `university.json` para
@@ -472,7 +473,7 @@ Crear:
 
 ```text
 emails/_universities/<slug>/university.json
-emails/_universities/<slug>/brand/v001/theme.ts
+emails/_universities/<slug>/brand/v001/theme.js
 ```
 
 `university.json` debe definir un `idPrefix` único, la revisión predeterminada y el import/export de
@@ -486,7 +487,7 @@ Guardar recursos fuente en `static` dentro de la versión:
 v001/
 ├── static/
 │   └── banner.png
-├── email.tsx
+├── email.jsx
 └── version.json
 ```
 
@@ -527,14 +528,15 @@ npm run email:diff -- \
   ulat-eml-2026-014-01@v002
 ```
 
-El comando compara tanto `email.tsx` como los HTML, cuando ambos artefactos existen.
+El comando compara tanto `email.jsx` como los HTML, cuando ambos artefactos existen.
 
 ### Caso S: entrega final
 
 Antes de liberar:
 
 ```bash
-npm run typecheck
+npm run check:syntax
+npm run check:compile
 npm run email:check -- ulat-eml-2026-014-01@v003
 npm run email:release -- ulat-eml-2026-014-01@v003
 ```
@@ -608,14 +610,15 @@ Las ramas son espacios de trabajo. Los tags son hitos históricos.
 
 `npm run check` ejecuta:
 
-1. TypeScript estricto.
+1. Sintaxis del CLI JavaScript.
 2. Validación de todas las versiones.
-3. Verificación de relaciones entre manifiestos.
-4. Existencia de kit, layout, marca y fuente.
-5. Checksum del artefacto cuando existe.
-6. Huella de los archivos de entrada para detectar cambios posteriores en fuente, kit, layout o
+3. Compilación y render temporal de todas las plantillas JSX.
+4. Verificación de relaciones entre manifiestos.
+5. Existencia de kit, layout, marca y fuente.
+6. Checksum del artefacto cuando existe.
+7. Huella de los archivos de entrada para detectar cambios posteriores en fuente, kit, layout o
    marca.
-7. Inspección básica de enlaces del HTML.
+8. Inspección básica de enlaces del HTML.
 
 El workflow de GitHub Actions ejecuta `npm ci` y `npm run check` en pushes y pull requests.
 
@@ -669,7 +672,7 @@ locales para no multiplicar kits y layouts.
 
 ### Dependencias y Node
 
-Actualizar React Email, React, Node o TypeScript en un PR separado. Ejecutar exportaciones de
+Actualizar React Email, React, Node o npm en un PR separado. Ejecutar exportaciones de
 regresión antes de adoptar la actualización. Nunca mezclar una actualización de dependencias con una
 entrega urgente.
 
@@ -703,7 +706,7 @@ duplicación por entrega y permiten recuperar cada resultado final.
 - [ ] No quedan enlaces provisionales.
 - [ ] Las imágenes tienen texto alternativo y URL estable.
 - [ ] Se revisó desktop y móvil.
-- [ ] `npm run typecheck` termina correctamente.
+- [ ] `npm run check` termina correctamente.
 - [ ] `npm run email:check -- <id>@<versión>` termina sin errores.
 - [ ] El HTML de revisión fue aprobado.
 - [ ] `npm run email:release -- <id>@<versión>` fue ejecutado.

@@ -1,9 +1,8 @@
 import { Hr, Text } from "react-email";
 import { CtaSection } from "@email/kits/v001";
-import type { CtaContent } from "@email/types/email";
 import { uLatinaBrandV001 } from "@universities/ulatina/brand/v001/theme";
 
-const variants: Array<{ label: string; content: CtaContent }> = [
+const variants = [
   {
     label: "CTA vertical con dos botones",
     content: {

@@ -43,7 +43,7 @@
     "createdAt": { "type": "string", "format": "date" },
     "generatedAt": { "type": ["string", "null"], "format": "date-time" },
     "releasedAt": { "type": ["string", "null"], "format": "date-time" },
-    "source": { "const": "email.tsx" },
+    "source": { "const": "email.jsx" },
     "output": { "const": "artifacts/email.html" },
     "outputSha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" },
     "inputSha256": { "type": ["string", "null"], "pattern": "^[a-f0-9]{64}$" }

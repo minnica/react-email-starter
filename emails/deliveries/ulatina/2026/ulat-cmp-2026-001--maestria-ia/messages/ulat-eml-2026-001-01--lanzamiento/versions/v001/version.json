@@ -13,10 +13,10 @@
   "preheader": "Conoce más sobre la Maestría en Inteligencia Artificial.",
   "status": "draft",
   "createdAt": "2026-08-03",
-  "generatedAt": "2026-08-03T07:18:30.628Z",
+  "generatedAt": "2026-08-03T07:28:39.653Z",
   "releasedAt": null,
-  "source": "email.tsx",
+  "source": "email.jsx",
   "output": "artifacts/email.html",
   "outputSha256": "40b3983eec9291a775ca3591aeb21571bb3c4062ac917e5256f9c8ff175064cf",
-  "inputSha256": "5006db958bedfc97aaaf72a10350a3c2e0446ab2e52ca997318c1a14ac5125bb"
+  "inputSha256": "06175e294577be024211aa3f5f11954e9e87fd2e2779d9526faf89d4a0b78aa1"
 }

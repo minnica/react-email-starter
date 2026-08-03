@@ -1,6 +1,5 @@
 import { CtaSection } from "@email/kits/v001";
 import { LegacyLayout } from "@email/layouts/legacy/v001";
-import type { CtaContent } from "@email/types/email";
 import { uLatinaBrandV001 } from "@universities/ulatina/brand/v001/theme";
 
 const content = {
@@ -17,7 +16,7 @@ const content = {
     text: "CTA Principal",
     href: "https://api-wa",
   },
-} satisfies CtaContent;
+};
 
 export function Email() {
   return (

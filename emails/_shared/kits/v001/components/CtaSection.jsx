@@ -1,13 +1,7 @@
 import { Heading, Section, Text } from "react-email";
-import type { CtaContent, EmailBrand } from "@email/types/email";
 import { CtaButton } from "./CtaButton";
 
-interface CtaSectionProps {
-  brand: EmailBrand;
-  content: CtaContent;
-}
-
-export function CtaSection({ brand, content }: CtaSectionProps) {
+export function CtaSection({ brand, content }) {
   const primaryButton = { ...brand.primaryButton, ...content.primaryButton };
   const secondaryButton = content.secondaryButton
     ? { ...brand.secondaryButton, ...content.secondaryButton }

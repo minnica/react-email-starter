@@ -1,11 +1,6 @@
 import { Button, Column, Img, Row } from "react-email";
-import type {
-  ButtonsDirection,
-  EmailButton,
-  HorizontalAlignment,
-} from "@email/types/email";
 
-function ButtonWithIcon({ button }: { button: EmailButton }) {
+function ButtonWithIcon({ button }) {
   const icon = button.hasIcon && button.iconSrc ? (
     <Img
       src={button.iconSrc}
@@ -42,21 +37,13 @@ function ButtonWithIcon({ button }: { button: EmailButton }) {
   );
 }
 
-interface CtaButtonProps {
-  primaryButton: EmailButton;
-  secondaryButton?: EmailButton;
-  buttonsDirection?: ButtonsDirection;
-  buttonsGap?: string;
-  buttonsAlign?: HorizontalAlignment;
-}
-
 export function CtaButton({
   primaryButton,
   secondaryButton,
   buttonsDirection = "vertical",
   buttonsGap = "12px",
   buttonsAlign = "center",
-}: CtaButtonProps) {
+}) {
   const primaryButtonElement = <ButtonWithIcon button={primaryButton} />;
   const secondaryButtonElement = secondaryButton?.text ? (
     <ButtonWithIcon button={secondaryButton} />

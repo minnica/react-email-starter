@@ -1,7 +1,6 @@
-import { Body, Font, Head, Html } from "react-email";
-import type { EmailLayoutProps } from "@email/types/email";
+import { Body, Container, Font, Head, Html, Preview } from "react-email";
 
-export function LegacyLayout({ brand, children }: EmailLayoutProps) {
+export function PromotionalLayout({ brand, preheader, children }) {
   return (
     <Html>
       <Head>
@@ -18,7 +17,10 @@ export function LegacyLayout({ brand, children }: EmailLayoutProps) {
           />
         ) : null}
       </Head>
-      <Body>{children}</Body>
+      <Preview>{preheader}</Preview>
+      <Body style={brand.bodyStyle}>
+        <Container style={brand.containerStyle}>{children}</Container>
+      </Body>
     </Html>
   );
 }

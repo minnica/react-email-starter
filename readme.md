@@ -1,6 +1,7 @@
 # Repositorio de correos universitarios
 
-Proyecto de React Email organizado por universidad, campaña, correo y versión inmutable.
+Proyecto JavaScript/JSX de React Email organizado por universidad, campaña, correo y versión
+inmutable.
 
 La guía completa de arquitectura, versionado y operación diaria está en
 [ARQUITECTURA_Y_WORKFLOW.md](./ARQUITECTURA_Y_WORKFLOW.md).

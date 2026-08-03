@@ -1,5 +1,3 @@
-import type { EmailBrand } from "@email/types/email";
-
 export const uLatinaBrandV001 = {
   id: "ulatina/v001",
   name: "Universidad Latina",
@@ -32,4 +30,4 @@ export const uLatinaBrandV001 = {
     height: "36px",
     lineHeight: "36px",
   },
-} satisfies EmailBrand;
+};

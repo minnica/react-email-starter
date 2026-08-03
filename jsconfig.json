@@ -1,21 +1,15 @@
 {
   "compilerOptions": {
-    "composite": false,
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "@email/*": ["emails/_shared/*"],
       "@universities/*": ["emails/_universities/*"]
-    },
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "strictNullChecks": true
+    }
   },
-  "include": ["emails/**/*.ts", "emails/**/*.tsx"],
+  "include": ["emails/**/*.js", "emails/**/*.jsx"],
   "exclude": ["node_modules", ".react-email", "out"]
 }
