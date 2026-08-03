@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-03T07:18:30.630Z",
+  "total": 1,
+  "entries": [
+    {
+      "deliveryId": "ulat-eml-2026-001-01-v001",
+      "emailId": "ulat-eml-2026-001-01",
+      "version": "v001",
+      "university": "ulatina",
+      "campaignId": "ulat-cmp-2026-001",
+      "campaign": "Maestría en Inteligencia Artificial",
+      "email": "Lanzamiento",
+      "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "status": "draft",
+      "source": "emails/deliveries/ulatina/2026/ulat-cmp-2026-001--maestria-ia/messages/ulat-eml-2026-001-01--lanzamiento/versions/v001/email.tsx",
+      "output": "emails/deliveries/ulatina/2026/ulat-cmp-2026-001--maestria-ia/messages/ulat-eml-2026-001-01--lanzamiento/versions/v001/artifacts/email.html",
+      "releasedAt": null
+    }
+  ]
+}

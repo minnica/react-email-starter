@@ -1,27 +1,40 @@
-# React Email Starter
+# Repositorio de correos universitarios
 
-A live preview right in your browser so you don't need to keep sending real emails during development.
+Proyecto de React Email organizado por universidad, campaña, correo y versión inmutable.
 
-## Getting Started
+La guía completa de arquitectura, versionado y operación diaria está en
+[ARQUITECTURA_Y_WORKFLOW.md](./ARQUITECTURA_Y_WORKFLOW.md).
 
-First, install the dependencies:
+## Inicio rápido
 
-```sh
-npm install
-# or
-yarn
+```bash
+nvm use
+npm ci
+npm run email:list
+npm run dev -- ulat-eml-2026-001-01@v001
 ```
 
-Then, run the development server:
+## Comandos principales
 
-```sh
-npm run dev
-# or
-yarn dev
+```bash
+# Crear un correo en una campaña nueva
+npm run email:new -- \
+  --university ulatina \
+  --campaign-name "Admisiones septiembre" \
+  --email-name "Lanzamiento" \
+  --subject "Inicia tu proceso de admisión" \
+  --preheader "Conoce las fechas y requisitos."
+
+# Crear una nueva versión desde una entrega anterior
+npm run email:new -- --from ulat-eml-2026-001-01@v001
+
+# Previsualizar, validar y exportar una versión
+npm run dev -- ulat-eml-2026-001-01@v001
+npm run email:check -- ulat-eml-2026-001-01@v001
+npm run export -- ulat-eml-2026-001-01@v001
+
+# Congelar una entrega final
+npm run email:release -- ulat-eml-2026-001-01@v001
 ```
 
-Open [localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## License
-
-MIT License
+No edites una versión con estado `delivered`. Crea una versión nueva con `--from`.

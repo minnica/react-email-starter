@@ -2,10 +2,26 @@
   "name": "react-email-starter",
   "version": "1.1.0",
   "private": true,
+  "packageManager": "npm@11.8.0",
+  "engines": {
+    "node": "24.13.x",
+    "npm": "11.8.x"
+  },
   "scripts": {
-    "build": "email build",
-    "dev": "email dev",
-    "export": "email export"
+    "build": "email build --dir emails",
+    "dev": "node scripts/email-cli.mjs dev",
+    "dev:all": "email dev --dir emails/deliveries",
+    "dev:components": "email dev --dir emails/_previews",
+    "export": "node scripts/email-cli.mjs export",
+    "export:all": "email export --dir emails/deliveries --outDir out --pretty",
+    "email:new": "node scripts/email-cli.mjs new",
+    "email:list": "node scripts/email-cli.mjs list",
+    "email:catalog": "node scripts/email-cli.mjs catalog",
+    "email:check": "node scripts/email-cli.mjs check",
+    "email:diff": "node scripts/email-cli.mjs diff",
+    "email:release": "node scripts/email-cli.mjs release",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run email:check -- --all"
   },
   "dependencies": {
     "react-email": "6.9.1",
@@ -15,6 +31,7 @@
   "devDependencies": {
     "@react-email/ui": "6.9.1",
     "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3"
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
   }
 }

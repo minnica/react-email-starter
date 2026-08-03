@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "ulatina",
+  "idPrefix": "ulat",
+  "name": "Universidad Latina",
+  "defaultBrandRevision": "v001",
+  "brandImport": "@universities/ulatina/brand/v001/theme",
+  "brandExport": "uLatinaBrandV001"
+}

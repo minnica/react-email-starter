@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "campaign.schema.json",
+  "title": "Email campaign",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "campaignId", "university", "name", "year", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "campaignId": { "type": "string", "pattern": "^[a-z0-9]+-cmp-[0-9]{4}-[0-9]{3}$" },
+    "university": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string", "minLength": 1 },
+    "year": { "type": "integer", "minimum": 2000, "maximum": 2200 },
+    "createdAt": { "type": "string", "format": "date" }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "deliveryId": "ulat-eml-2026-001-01-v001",
+  "emailId": "ulat-eml-2026-001-01",
+  "version": "v001",
+  "basedOn": null,
+  "university": "ulatina",
+  "campaignId": "ulat-cmp-2026-001",
+  "kitRevision": "v001",
+  "layoutRevision": "legacy/v001",
+  "brandRevision": "ulatina/v001",
+  "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "preheader": "Conoce más sobre la Maestría en Inteligencia Artificial.",
+  "status": "draft",
+  "createdAt": "2026-08-03",
+  "generatedAt": "2026-08-03T07:18:30.628Z",
+  "releasedAt": null,
+  "source": "email.tsx",
+  "output": "artifacts/email.html",
+  "outputSha256": "40b3983eec9291a775ca3591aeb21571bb3c4062ac917e5256f9c8ff175064cf",
+  "inputSha256": "5006db958bedfc97aaaf72a10350a3c2e0446ab2e52ca997318c1a14ac5125bb"
+}
